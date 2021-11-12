@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ebrarsahin/Desktop/workspace/PhdSimulation/VariadicTable.h
+iostream
+-
+iomanip
+-
+ios
+-
+vector
+-
+tuple
+-
+type_traits
+-
+cassert
+-
+cmath
+-
+
+/Users/ebrarsahin/Desktop/workspace/PhdSimulation/main.cpp
+iostream
+-
+queue
+-
+random
+-
+VariadicTable.h
+/Users/ebrarsahin/Desktop/workspace/PhdSimulation/VariadicTable.h
+
