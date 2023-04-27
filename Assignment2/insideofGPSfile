@@ -1,0 +1,39 @@
+{\fonttbl{\f0\fcharset0 Courier New;}}
+{\colortbl;}
+{\*\generator Wine Riched20 2.0;}
+\pard\sl-240\slmult1\tx1200\tx2400\tx4440\tx5280\tx6000 \b\lang1033\fs20\f0 WAITING_ROOM\tab STORAGE\tab 3\tab \tab \tab \tab \tab \tab \tab \tab \tab ; Santa's waiting room has 3 seats.\par
+SERVICE_TIMES\tab FUNCTION\tab RN10,D4\tab \tab \tab \tab \tab \tab \tab \tab \tab ; Santa's service times.\par
+.3,20/.45,40/.5,60/1,30\par
+***********************************************************SANTA IS RESTING****************************************************\par
+\tab \tab \tab GENERATE 240,,,,\par
+\tab \tab \tab FUNAVAIL SANTA_CLAUS\tab \tab \tab \tab \tab \tab ; Santa needs to rest 10 minutes in every 4 hours. Santa is unavailable.\par
+\tab \tab \tab ADVANCE 10,\par
+\tab \tab \tab FAVAIL SANTA_CLAUS\tab \tab \tab \tab \tab \tab ; The resting is finished. Santa is available.\par
+\tab \tab \tab TERMINATE 0\tab \par
+***********************************************************GENERATING ELVES**************************************************\par
+\tab \tab \tab GENERATE (EXPONENTIAL(1,30,1)),,,,10 \tab \tab \tab \tab ; Elf has lower priority than Mrs. Claus.\par
+ \tab \tab \tab QUEUE \tab \tab WAITING_ROOM_Q\par
+\tab \tab \tab ENTER \tab \tab WAITING_ROOM,1\par
+\tab \tab \tab SEIZE\tab \tab SANTA_CLAUS\par
+\tab \tab \tab DEPART \tab WAITING_ROOM_Q\par
+\tab \tab \tab LEAVE\tab \tab WAITING_ROOM,1\par
+\tab \tab \tab ADVANCE \tab (GAMMA(10,0,FN$SERVICE_TIMES,4))\tab \tab ; Erlang dist. according to GPSS manual.\tab \tab \par
+\tab \tab \tab RELEASE \tab SANTA_CLAUS\tab \tab \par
+\tab \tab \tab TERMINATE 0\par
+***********************************************************GENERATING MRS. CLAUS*******************************************\par
+\tab \tab \tab GENERATE 180,120,,,15 \tab \tab \tab \tab \tab \tab ; Mrs. Claus has higher priority than elves\par
+\tab \tab \tab QUEUE \tab WAITING_ROOM_Q\par
+\tab \tab \tab ENTER \tab WAITING_ROOM,1\par
+\tab \tab \tab SEIZE\tab SANTA_CLAUS\par
+\tab \tab \tab DEPART WAITING_ROOM_Q\par
+\tab \tab \tab LEAVE\tab WAITING_ROOM,1\par
+\tab \tab \tab ADVANCE 10,5\par
+\tab \tab \tab RELEASE\tab SANTA_CLAUS\par
+\tab \tab \tab TERMINATE 0\par
+***********************************************************GENERATING 9 DEERS**************************************************\par
+\tab \tab \tab GENERATE (EXPONENTIAL(1,720,1)),,,9,\tab \tab \tab \tab ; After all the deers generating, the model ends.\tab \tab \tab \tab \tab \tab \par
+\tab \tab \tab TERMINATE 1\par
+\par
+\tab \par
+\par
+} 
